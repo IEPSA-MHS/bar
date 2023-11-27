@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="misc" onclick="displayPopUp()">
+      <strong>Misc.</strong><br /><small>OtherStuff</small>
+    </button>
+    <canvas id="canv" width="500" height="200"></canvas>
+    <div id="the-pop-up">
+      <div id="pop-up-content">
+        <h1 id="pop-up-title">Follow the White Rabbit</h1>
+        <div id="pop-up-body">
+          <blockquote id="morpheus-quote">
+            <p>
+              This is your last chance. After this, there is no turning back.
+              You take the blue pill - the story ends, you wake up in your bed
+              and believe whatever you want to believe. You take the red pill -
+              you stay in Wonderland and I show you how deep the rabbit hole
+              goes.
+            </p>
+            <footer>-Morpheus, <cite>The Matrix</cite></footer>
+          </blockquote>
+        </div>
+        <div id="pop-up-action">
+          <div style="width: 125px; min-height: 40px">
+            <button onclick="hidePopUp()" class="btn btn-neon-info">
+              Blue pill
+            </button>
+          </div>
+          <div style="width: 125px; min-height: 40px">
+            <button onclick="hidePopUp()" class="btn btn-neon-error">
+              Red pill
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<style>
+  body {
+    margin: unset;
+    padding: unset;
+    background-color: rgb(10, 10, 15);
+  }
+  #canv {
+    width: 100vw;
+    height: 100vh;
+  }
+  #the-pop-up {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgb(10, 10, 15, 0.5);
+  }
+  #pop-up-content {
+    transition: 0.5s;
+    z-index: 100;
+    width: 500px;
+    background-color: rgb(10, 10, 15, 0.9);
+    color: rgb(20, 210, 55);
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+  }
+  #pop-up-content::before,
+  #pop-up-content::after {
+    transition: 0.5s;
+    content: "";
+    display: block;
+    position: absolute;
+    height: 0%;
+    width: 0%;
+  }
+  #pop-up-content::before {
+    transition: 0.5s;
+    top: -1px;
+    left: -1px;
+  }
+  #pop-up-content::after {
+    transition: 0.5s;
+    bottom: -1px;
+    right: -1px;
+  }
+  #pop-up-content:hover::before,
+  #pop-up-content:hover::after {
+    width: 100%;
+    height: 100%;
+    transition: 0.5s;
+  }
+  #pop-up-content:hover::before {
+    transition: 0.5s;
+    border-top: rgb(20, 210, 55) 1px solid;
+    border-left: rgb(20, 210, 55) 1px solid;
+  }
+  #pop-up-content:hover::after {
+    transition: 0.5s;
+    border-bottom: rgb(20, 210, 55) 1px solid;
+    border-right: rgb(20, 210, 55) 1px solid;
+  }
+  #pop-up-content:hover {
+    box-shadow: 0 0 15px rgb(20, 210, 55), 0 0 15px rgb(20, 210, 55);
+    transition-duration: 0.5s;
+    transition-delay: 0.5s;
+    background-color: rgb(10, 10, 15, 1);
+  }
+  #pop-up-action {
+    z-index: 101;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #pop-up-title {
+    width: 100%;
+    padding: 0 16px;
+  }
+  #pop-up-body {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  /* ---- */
+  /* btn */
+  /* ---- */
+  .btn {
+    height: 30px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 25px;
+    cursor: pointer;
+    color: white;
+  }
+  #morpheus-quote {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  #morpheus-quote > p {
+    width: 100%;
+  }
+  /* ---- */
+  /* neon */
+  /* ---- */
+  /* ------ */
+  /* error */
+  /* ------ */
+  .btn-neon-error {
+    background-color: transparent;
+    color: #ff6161;
+    border: solid 1px #ff6161;
+    font-weight: 300;
+    box-shadow: 0 0 5px #ff6161, 0 0 5px #ff6161 inset;
+  }
+  .btn-neon-error:hover {
+    background-color: #ff6161;
+    color: white;
+    box-shadow: 0 0 20px #ff6161;
+  }
+  .btn-neon-error:active {
+    background-color: #ff6161;
+  }
+
+  /* ---- */
+  /* info */
+  /* ---- */
+  .btn-neon-info {
+    background-color: transparent;
+    color: rgb(80, 165, 240);
+    border: solid 1px rgb(80, 165, 240);
+    box-shadow: 0 0 5px rgb(80, 165, 240), 0 0 5px rgb(80, 165, 240) inset;
+    font-weight: 300;
+  }
+  .btn-neon-info:hover {
+    background-color: rgb(110, 195, 240);
+    box-shadow: 0 0 20px rgb(80, 165, 240);
+    color: white;
+  }
+  .btn-neon-info:active {
+    background-color: rgb(80, 165, 240);
+  }
+
+  /* nav-1 */
+  #misc {
+    all: unset;
+    display: inline-block;
+    padding: 6px 6px 0 6px;
+    margin: 0 4px;
+    height: 50px;
+    width: 120px;
+    text-transform: uppercase;
+    color: #9db5f2;
+    background-color: #22293b;
+    text-align: left;
+    cursor: pointer;
+    border-top: #4a67b1 3px solid;
+    border-left: #32467a 3px solid;
+    border-bottom: rgb(25, 35, 61) 1px solid;
+    border-right: none;
+    font-family: Arial, Helvetica, sans-serif;
+    position: fixed;
+    bottom: 25px;
+    right: -100px;
+    transition: 0.5s;
+  }
+
+  #misc:hover {
+    filter: brightness(1.5);
+    right: -25px;
+    transition: 0.5s;
+  }
+
+  #misc.active,
+  #misc:active {
+    background-color: #141924;
+    text-align: left;
+    border: inset;
+    border-bottom: #4a67b1 3px solid;
+    border-right: #32467a 3px solid;
+    border-top: rgb(25, 35, 61) 1px solid;
+    border-left: none;
+    filter: brightness(1);
+  }
+
+  #misc > strong {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  #misc > small {
+    font-size: 12px;
+    font-weight: 400;
+    color: #587ad1;
+  }
+</style>
+<script>
+  function displayPopUp() {
+    const popup = document.getElementById("the-pop-up");
+    popup.style.display = "flex";
+  }
+  function hidePopUp() {
+    const popup = document.getElementById("the-pop-up");
+    popup.style.display = "none";
+  }
+
+  const canvas = document.getElementById("canv");
+  const ctx = canvas.getContext("2d");
+
+  const w = (canvas.width = document.body.offsetWidth);
+  const h = (canvas.height = document.body.offsetHeight);
+  const cols = Math.floor(w / 20) + 1;
+  const ypos = Array(cols).fill(0);
+
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, w, h);
+
+  function matrix() {
+    ctx.fillStyle = "#0001";
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.fillStyle = "#0f0";
+    ctx.font = "15pt monospace";
+
+    ypos.forEach((y, ind) => {
+      const text = String.fromCharCode(Math.random() * 128);
+      const x = ind * 20;
+      ctx.fillText(text, x, y);
+      if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
+      else ypos[ind] = y + 20;
+    });
+  }
+
+  setInterval(matrix, 50);
+</script>
